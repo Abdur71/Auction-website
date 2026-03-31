@@ -963,6 +963,14 @@ let auctionSettings = {
     startTime: "",
     endMessage: "Auction has started."
 };
+const API_ROUTES = {
+    auctionSettingsGet: "/api/settings?action=getAuctionSettings",
+    playersList: "/api/players?action=list",
+    teamsList: "/api/teams?action=list",
+    teamsWithPlayers: "/api/teams?action=withPlayers",
+    stageGet: "/api/stage?action=get",
+    playerGet: (id) => `/api/players?action=getPlayer&id=${encodeURIComponent(id)}`
+};
 
 const players = {}; // Removed static data, now loaded from CSV via PHP
 
@@ -1058,7 +1066,7 @@ function renderAuctionCountdown() {
 
 async function loadAuctionSettings() {
     try {
-        const response = await fetch("get_auction_settings.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.auctionSettingsGet, { cache: "no-store" });
         const data = await response.json();
 
         auctionSettings = {
@@ -1085,7 +1093,7 @@ function updateBreakingNewsText(messages) {
 
 async function refreshBreakingNews() {
     try {
-        const response = await fetch("admin_players.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.playersList, { cache: "no-store" });
         const data = await response.json();
 
         if (data.error || !Array.isArray(data.players)) {
@@ -1158,7 +1166,7 @@ function renderStageDatabaseRows(playersToRender) {
 
 async function loadStageDatabase(searchValue, statusValue) {
     try {
-        const response = await fetch("admin_players.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.playersList, { cache: "no-store" });
         const data = await response.json();
 
         if (data.error || !Array.isArray(data.players)) {
@@ -1213,7 +1221,7 @@ function renderTeamsStage(teams) {
 
 async function loadStageTeams() {
     try {
-        const response = await fetch("get_teams.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.teamsList, { cache: "no-store" });
         const data = await response.json();
         const teams = Array.isArray(data.teams) ? data.teams : [];
 
@@ -1227,7 +1235,7 @@ async function loadStageTeams() {
 
 async function loadSingleTeamStage(teamId) {
     try {
-        const response = await fetch("get_teams_with_players.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.teamsWithPlayers, { cache: "no-store" });
         const data = await response.json();
         const teams = Array.isArray(data.teams) ? data.teams : [];
         const team = teams.find(item => Number(item.id) === Number(teamId));
@@ -1262,7 +1270,7 @@ async function loadSingleTeamStage(teamId) {
 
 async function syncStageViewFromAdmin(forceRefresh = false) {
     try {
-        const response = await fetch("get_stage_view.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.stageGet, { cache: "no-store" });
         const data = await response.json();
 
         const mode =
@@ -1322,7 +1330,7 @@ async function syncStageViewFromAdmin(forceRefresh = false) {
 
 function getPlayer(id = currentId) {
     // Fetch player data from PHP
-    fetch(`get_player.php?id=${id}`)
+    fetch(API_ROUTES.playerGet(id))
         .then(response => response.json())
         .then(data => {
             if (data.error) {

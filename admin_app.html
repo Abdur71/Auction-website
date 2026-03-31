@@ -1199,6 +1199,17 @@ const viewMeta = {
 let allPlayers = [];
 let ownerNameFromPlayerId = "";
 let allTeams = [];
+const API_ROUTES = {
+    auctionSettingsGet: "/api/settings?action=getAuctionSettings",
+    auctionSettingsSave: "/api/settings?action=saveAuctionSettings",
+    stageSet: "/api/stage?action=set",
+    teamsWithPlayers: "/api/teams?action=withPlayers",
+    teamSave: "/api/teams?action=save",
+    teamDelete: "/api/teams?action=delete",
+    playerGet: (id) => `/api/players?action=getPlayer&id=${encodeURIComponent(id)}`,
+    playersList: "/api/players?action=list",
+    soldState: "/api/players?action=soldState"
+};
 
 function setDashboardStatus(message, isError = false) {
     dashboardStatus.textContent = message;
@@ -1207,7 +1218,7 @@ function setDashboardStatus(message, isError = false) {
 
 async function loadAuctionSettings() {
     try {
-        const response = await fetch("get_auction_settings.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.auctionSettingsGet, { cache: "no-store" });
         const data = await response.json();
 
         auctionStartTimeInput.value = data.startTime || "";
@@ -1227,7 +1238,7 @@ async function saveAuctionSettings() {
     }
 
     try {
-        const response = await fetch("save_auction_settings.php", {
+        const response = await fetch(API_ROUTES.auctionSettingsSave, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1258,7 +1269,7 @@ async function showCountdownOnStage() {
     }
 
     try {
-        const response = await fetch("update_stage_view.php", {
+        const response = await fetch(API_ROUTES.stageSet, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1333,7 +1344,7 @@ function renderTeams(teams) {
 
 async function loadTeams() {
     try {
-        const response = await fetch("get_teams_with_players.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.teamsWithPlayers, { cache: "no-store" });
         const data = await response.json();
         renderTeams(Array.isArray(data.teams) ? data.teams : []);
     } catch (error) {
@@ -1353,7 +1364,7 @@ async function saveTeam() {
     }
 
     try {
-        const response = await fetch("save_team.php", {
+        const response = await fetch(API_ROUTES.teamSave, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1388,7 +1399,7 @@ async function deleteTeam(id) {
     }
 
     try {
-        const response = await fetch("delete_team.php", {
+        const response = await fetch(API_ROUTES.teamDelete, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1411,7 +1422,7 @@ async function deleteTeam(id) {
 
 async function showTeamsOnStage() {
     try {
-        const response = await fetch("update_stage_view.php", {
+        const response = await fetch(API_ROUTES.stageSet, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1442,7 +1453,7 @@ async function showSingleTeamOnStage(teamId) {
     }
 
     try {
-        const response = await fetch("update_stage_view.php", {
+        const response = await fetch(API_ROUTES.stageSet, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1481,7 +1492,7 @@ async function syncOwnerNameFromPlayerId() {
     }
 
     try {
-        const response = await fetch(`get_player.php?id=${ownerPlayerId}`, { cache: "no-store" });
+        const response = await fetch(API_ROUTES.playerGet(ownerPlayerId), { cache: "no-store" });
         const data = await response.json();
 
         if (data.error) {
@@ -1538,7 +1549,7 @@ async function loadPlayerPreview(id) {
     }
 
     try {
-        const response = await fetch(`get_player.php?id=${id}`, { cache: "no-store" });
+        const response = await fetch(API_ROUTES.playerGet(id), { cache: "no-store" });
         const data = await response.json();
 
         if (data.error) {
@@ -1651,7 +1662,7 @@ async function loadAdminPlayers() {
     playerTableBody.innerHTML = `<tr><td colspan="6" class="empty-state">Loading player data...</td></tr>`;
 
     try {
-        const response = await fetch("admin_players.php", { cache: "no-store" });
+        const response = await fetch(API_ROUTES.playersList, { cache: "no-store" });
         const data = await response.json();
 
         if (data.error) {
@@ -1720,7 +1731,7 @@ async function updateSoldState(isSold) {
     }
 
     try {
-        const response = await fetch("update_sold_status.php", {
+        const response = await fetch(API_ROUTES.soldState, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1763,7 +1774,7 @@ async function showSelectedPlayer() {
     }
 
     try {
-        const response = await fetch("update_stage_view.php", {
+        const response = await fetch(API_ROUTES.stageSet, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -1788,7 +1799,7 @@ async function showSelectedPlayer() {
 
 async function showDatabaseOnStage() {
     try {
-        const response = await fetch("update_stage_view.php", {
+        const response = await fetch(API_ROUTES.stageSet, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
