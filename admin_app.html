@@ -1677,13 +1677,13 @@ async function ensureAdminSession() {
         const data = await response.json();
 
         if (!data.authenticated) {
-            window.location.replace("admin_login.php");
+            window.location.replace("admin-login.html");
             return false;
         }
 
         return true;
     } catch (error) {
-        window.location.replace("admin_login.php");
+        window.location.replace("admin-login.html");
         return false;
     }
 }
@@ -1700,7 +1700,7 @@ async function logoutAdmin() {
         // Redirect even if the logout request fails.
     }
 
-    window.location.replace("admin_login.php");
+    window.location.replace("admin-login.html");
 }
 
 async function updateSoldState(isSold) {

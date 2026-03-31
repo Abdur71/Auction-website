@@ -142,7 +142,7 @@ async function redirectIfLoggedIn() {
         const data = await response.json();
 
         if (data.authenticated) {
-            window.location.replace("admin.php");
+            window.location.replace("admin_app.html");
         }
     } catch (error) {
         // Stay on the page if the session check fails.
@@ -168,7 +168,7 @@ async function login() {
             return;
         }
 
-        window.location.replace("admin.php");
+        window.location.replace("admin_app.html");
     } catch (error) {
         setStatus("Could not log in.", true);
     }
