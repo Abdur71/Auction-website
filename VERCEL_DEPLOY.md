@@ -5,12 +5,12 @@
 - PHP endpoints are mirrored by Vercel Node functions in `/api`
 - Old `.php` request paths are preserved through `vercel.json` rewrites
 - Admin login now uses a signed cookie session in Node
-- Persistent app state should use Vercel KV in production
+- Persistent app state now uses Upstash Redis in production
 
 ## Required Vercel Environment Variables
 
-- `KV_REST_API_URL`
-- `KV_REST_API_TOKEN`
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
 - `ADMIN_SESSION_SECRET`
 
 ## Optional Environment Variables
@@ -27,4 +27,4 @@
 
 ## Important
 
-Without Vercel KV configured, local JSON fallback works in local development, but production writes on Vercel are not reliable. For real deployment, connect Vercel KV before going live.
+Without Upstash Redis configured, local JSON fallback works in local development, but production writes on Vercel are not reliable. For real deployment, connect Redis before going live.
