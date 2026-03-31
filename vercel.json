@@ -1,0 +1,22 @@
+{
+  "rewrites": [
+    { "source": "/admin.php", "destination": "/admin_app.html" },
+    { "source": "/admin_login.php", "destination": "/admin-login.html" },
+    { "source": "/admin_logout.php", "destination": "/api/auth/logout" },
+    { "source": "/admin_authenticate.php", "destination": "/api/auth/login" },
+    { "source": "/get_player.php", "destination": "/api/get_player" },
+    { "source": "/admin_players.php", "destination": "/api/admin_players" },
+    { "source": "/get_teams.php", "destination": "/api/get_teams" },
+    { "source": "/get_teams_with_players.php", "destination": "/api/get_teams_with_players" },
+    { "source": "/get_stage_view.php", "destination": "/api/get_stage_view" },
+    { "source": "/update_stage_view.php", "destination": "/api/update_stage_view" },
+    { "source": "/get_auction_settings.php", "destination": "/api/get_auction_settings" },
+    { "source": "/save_auction_settings.php", "destination": "/api/save_auction_settings" },
+    { "source": "/update_sold_status.php", "destination": "/api/update_sold_status" },
+    { "source": "/save_team.php", "destination": "/api/save_team" },
+    { "source": "/delete_team.php", "destination": "/api/delete_team" },
+    { "source": "/update_current_player.php", "destination": "/api/update_current_player" },
+    { "source": "/get_current_player.php", "destination": "/api/get_current_player" },
+    { "source": "/drive_image.php", "destination": "/api/drive_image" }
+  ]
+}
