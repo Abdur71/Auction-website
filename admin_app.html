@@ -1673,7 +1673,7 @@ async function loadAdminPlayers() {
 
 async function ensureAdminSession() {
     try {
-        const response = await fetch("/api/auth/session", { cache: "no-store" });
+        const response = await fetch("/api/auth?action=session", { cache: "no-store" });
         const data = await response.json();
 
         if (!data.authenticated) {
@@ -1690,7 +1690,7 @@ async function ensureAdminSession() {
 
 async function logoutAdmin() {
     try {
-        await fetch("/api/auth/logout", {
+        await fetch("/api/auth?action=logout", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
